@@ -8,6 +8,5 @@ SendRequestThread::SendRequestThread(Request request, AbstractBuffer<Response>* 
 void SendRequestThread::run(){
     reqHandler = new RequestHandler(request, hasDebugLog);
     response = reqHandler->handle();
-    printf("La response est :%s",response.getResponse());
     responsesBuffer->put(response);
 }

@@ -10,11 +10,11 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 
 void RequestDispatcherThread::run(){
     //int nbHeart = QThread::idealThreadCount();
+    SendRequestThread* send;
     while(true){
-        printf("attent d'une valeur dans le buffer\n");
         request = requestsBuffer->get();
-        printf("Une valeur est arrive dans le buffer\n");
-        new SendRequestThread(request, responsesBuffer, hasDebugLog);
+        send = new SendRequestThread(request, responsesBuffer, hasDebugLog);
+        send->start();
         //connect(SendRequestThread, &SendRequestThread::finished,SendRequestThread, QObject::deleteLater());
     }
 
