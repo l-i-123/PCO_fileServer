@@ -10,12 +10,22 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 
 void RequestDispatcherThread::run(){
     //int nbHeart = QThread::idealThreadCount();
-    SendRequestThread* send;
+    SendRequestThread* newThread;
+    QVector<SendRequestThread*>* threadArray = new QVector<SendRequestThread*>;
+
     while(true){
+
+        for(int i = 0; i < threadArray->size(); i++){
+            if(threadArray->at(i)->wait(1)){
+                threadArray->removeAt(i);
+            }
+        }
+
         request = requestsBuffer->get();
-        send = new SendRequestThread(request, responsesBuffer, hasDebugLog);
-        send->start();
-        //connect(SendRequestThread, &SendRequestThread::finished,SendRequestThread, QObject::deleteLater());
+        newThread = new SendRequestThread(request, responsesBuffer, hasDebugLog);
+        threadArray->push_front(newThread);
+        newThread->start();
+        //connect(newThread, &SendRequestThread::finished,QObject, QObject::deleteLater());
     }
 
 }

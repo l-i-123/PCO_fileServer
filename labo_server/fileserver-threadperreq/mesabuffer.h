@@ -13,7 +13,6 @@ public:
     MesaBuffer(){}
 
     void put(T item){
-        printf("mesaBuffer put\n");
         mutex->lock();
         while(buffer.size() > 20){
             isFree.wait(mutex);
@@ -24,13 +23,11 @@ public:
     }
 
     T get(){
-        printf("mesaBuffer get\n");
         T result;
         mutex->lock();
         while(buffer.isEmpty()){
             isFull.wait(mutex);
         }
-        printf("recuperation des donnes dans le buffer\n");
         result = buffer.last();
         buffer.pop_back();
 
