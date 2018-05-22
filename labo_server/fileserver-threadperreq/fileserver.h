@@ -84,8 +84,8 @@ private:
     QMap<QString, QWebSocket *> clients;
     RequestDispatcherThread* reqDispatcher; // TODO
     ResponseDispatcherThread* respDispatcher;
-    MesaBuffer<Request>* requests;
-    MesaBuffer<Response>* responses;
+    AbstractBuffer<Request>* requests;
+    AbstractBuffer<Response>* responses;
     bool hasDebugLog;
 };
 

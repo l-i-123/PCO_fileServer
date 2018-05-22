@@ -11,14 +11,14 @@
 class RequestDispatcherThread : public QThread
 {
 public:
-    RequestDispatcherThread(MesaBuffer<Request>* requestsBuffer, MesaBuffer<Response>* responsesBuffer);
+    RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer);
 
 protected:
     void run();
 
 private:
-    MesaBuffer<Request>* requestsBuffer;
-    MesaBuffer<Response>* responsesBuffer;
+    AbstractBuffer<Request>* requestsBuffer;
+    AbstractBuffer<Response>* responsesBuffer;
     QVector<SendRequestThread> threadVector;
     Request request;
     Response response;

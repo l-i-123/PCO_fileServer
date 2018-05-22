@@ -10,7 +10,7 @@ template<typename T>
 class MesaBuffer : public AbstractBuffer<T>
 {
 public:
-    MesaBuffer();
+    MesaBuffer(){}
 
     void put(T item){
         printf("mesaBuffer put\n");

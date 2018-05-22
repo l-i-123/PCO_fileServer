@@ -2,7 +2,7 @@
 #include "sendrequestthread.h"
 #include <QVector>
 
-RequestDispatcherThread::RequestDispatcherThread(MesaBuffer<Request>* requestsBuffer, MesaBuffer<Response>* responsesBuffer){
+RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer){
     this->requestsBuffer = requestsBuffer;
     this->responsesBuffer = responsesBuffer;
 }
