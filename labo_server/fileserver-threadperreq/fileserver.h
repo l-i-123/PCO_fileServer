@@ -56,6 +56,8 @@
 #include <QString>
 #include "responsedispatcherthread.h"
 #include "response.h"
+#include "mesabuffer.h"
+#include "requestdispatcherthread.h"
 
 QT_FORWARD_DECLARE_CLASS(QWebSocketServer)
 QT_FORWARD_DECLARE_CLASS(QWebSocket)
@@ -82,8 +84,8 @@ private:
     QMap<QString, QWebSocket *> clients;
     RequestDispatcherThread* reqDispatcher; // TODO
     ResponseDispatcherThread* respDispatcher;
-    AbstractBuffer<Request>* requests;
-    AbstractBuffer<Response>* responses;
+    MesaBuffer<Request>* requests;
+    MesaBuffer<Response>* responses;
     bool hasDebugLog;
 };
 

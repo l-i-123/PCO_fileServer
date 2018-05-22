@@ -12,7 +12,9 @@ SOURCES += \
     fileserver.cpp \
     filereader.cpp \
     requesthandler.cpp \
-    responsedispatcherthread.cpp
+    responsedispatcherthread.cpp \
+    requestdispatcherthread.cpp \
+    sendrequestthread.cpp
 
 HEADERS += \
     fileserver.h \
@@ -21,7 +23,10 @@ HEADERS += \
     abstractbuffer.h \
     request.h \
     requesthandler.h \
-    responsedispatcherthread.h
+    responsedispatcherthread.h \
+    mesabuffer.h \
+    requestdispatcherthread.h \
+    sendrequestthread.h
 
 EXAMPLE_FILES += fileclient.html
 
