@@ -30,7 +30,7 @@ public:
         while(buffer.isEmpty()){
             isFull.wait(mutex);
         }
-
+        printf("recuperation des donnes dans le buffer\n");
         result = buffer.last();
         buffer.pop_back();
 

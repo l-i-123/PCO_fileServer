@@ -67,9 +67,10 @@ FileServer::FileServer(quint16 port, bool debug, QObject *parent) :
     requests = new MesaBuffer<Request>();
     responses = new MesaBuffer<Response>();
 
-    reqDispatcher = new RequestDispatcherThread(requests, responses);
+    reqDispatcher = new RequestDispatcherThread(requests, responses, debug);
     respDispatcher = new ResponseDispatcherThread(responses, hasDebugLog);
     respDispatcher->start();
+    reqDispatcher->start();
     connect(respDispatcher, SIGNAL(responseReady(Response)), this, SLOT(handleResponse(Response)));
 
     if (websocketServer->listen(QHostAddress::Any, port)) {

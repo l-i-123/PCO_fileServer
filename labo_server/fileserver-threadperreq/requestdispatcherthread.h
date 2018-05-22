@@ -11,7 +11,7 @@
 class RequestDispatcherThread : public QThread
 {
 public:
-    RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer);
+    RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog);
 
 protected:
     void run();
@@ -22,6 +22,7 @@ private:
     QVector<SendRequestThread> threadVector;
     Request request;
     Response response;
+    bool hasDebugLog;
 };
 
 #endif // REQUESTDISPATCHERTHREAD_H

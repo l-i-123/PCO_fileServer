@@ -13,13 +13,13 @@ class SendRequestThread: public QThread
 private:
 
 Request request;
-MesaBuffer<Response>* responsesBuffer;
+AbstractBuffer<Response>* responsesBuffer;
 RequestHandler* reqHandler;
-bool hasDebugLog = false;
+bool hasDebugLog;
 Response response;
 
 public:
-    SendRequestThread(Request request, MesaBuffer<Response>* responsesBuffer, bool hasDebugLog);
+    SendRequestThread(Request request, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog);
     void run();
 };
 
