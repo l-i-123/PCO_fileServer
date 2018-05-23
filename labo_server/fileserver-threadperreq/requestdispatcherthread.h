@@ -19,7 +19,6 @@ protected:
 private:
     AbstractBuffer<Request>* requestsBuffer;
     AbstractBuffer<Response>* responsesBuffer;
-    QVector<SendRequestThread> threadVector;
     Request request;
     Response response;
     bool hasDebugLog;
