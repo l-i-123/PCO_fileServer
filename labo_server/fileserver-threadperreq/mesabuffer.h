@@ -1,3 +1,12 @@
+/**
+ * Description:     Class implementing a Mesa monitor. The two methods of the class
+ *                  AbstractBuffer are implemented here.
+ * Name of file:    mesabuffer.h
+ * Authors:         NDjoli Elie
+ *                  Silva Miguel
+ * Date:            16.05.2018
+ */
+
 #ifndef MESABUFFER_H
 #define MESABUFFER_H
 
@@ -12,26 +21,35 @@ class MesaBuffer : public AbstractBuffer<T>
 public:
     MesaBuffer(){}
 
+    /* Add a request (thread) in the request buffer */
     void put(T item){
-        mutex->lock();
+        mutex->lock();//beginning of the critical section
+
+        /* Check and loop if there are 20 or more threads in the buffer */
         while(buffer.size() > 20){
             isFree.wait(mutex);
         }
+
         buffer.push_front(item);
+        /* "Réveille" an item in waiting status */
         isFull.wakeOne();
-        mutex->unlock();
+
+        mutex->unlock(); // end of the critical section
     }
 
+    /* Return a request (thread) of the request buffer */
     T get(){
         T result;
-        mutex->lock();
+        mutex->lock(); //beginning of the critical section
+
+        /* Check and loop if the buffer is empty */
         while(buffer.isEmpty()){
             isFull.wait(mutex);
         }
         result = buffer.last();
         buffer.pop_back();
 
-        mutex->unlock();
+        mutex->unlock(); // end of the critical section
         isFree.wakeOne();
         return result;
     }
