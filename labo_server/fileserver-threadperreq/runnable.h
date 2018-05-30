@@ -1,6 +1,9 @@
 #ifndef RUNNABLE_H
 #define RUNNABLE_H
 #include <QString>
+#include "request.h"
+#include "response.h"
+#include "abstractbuffer.h"
 
 class Runnable
 {

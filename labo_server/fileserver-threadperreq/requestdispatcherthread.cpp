@@ -9,6 +9,8 @@
 
 #include "requestdispatcherthread.h"
 #include "sendrequestthread.h"
+#include "runnable.h"
+#include "runnabletask.h"
 #include <QVector>
 
 RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog){
@@ -25,7 +27,8 @@ void RequestDispatcherThread::run(){
         /* Waiting on value in the request buffer */
         request = requestsBuffer->get();
 
-        newThread = new SendRequestThread(request, responsesBuffer, hasDebugLog);
+        RunnableTask *task = new RunnableTask(request, responsesBuffer, 1, hasDebugLog);
+
         /* Send a signal when the thread is finished. It means that it can be deleted
            This part between the signal and the slot is a little bit more complex
            Check the link: http://doc.qt.io/archives/qt-4.8/signalsandslots.html */

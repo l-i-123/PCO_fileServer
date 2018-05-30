@@ -16,7 +16,7 @@ SOURCES += \
     requestdispatcherthread.cpp \
     sendrequestthread.cpp \
     threadpool.cpp \
-    worker.cpp
+    runnabletask.cpp
 
 HEADERS += \
     fileserver.h \
@@ -31,7 +31,7 @@ HEADERS += \
     sendrequestthread.h \
     runnable.h \
     threadpool.h \
-    worker.h
+    runnabletask.h
 
 EXAMPLE_FILES += fileclient.html
 
