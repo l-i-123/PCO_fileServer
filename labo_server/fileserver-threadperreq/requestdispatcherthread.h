@@ -16,6 +16,7 @@
 #include <QThread>
 #include "sendrequestthread.h"
 #include "response.h"
+#include "threadpool.h"
 
 class RequestDispatcherThread : public QThread
 {
@@ -33,6 +34,7 @@ private:
     Request request;
     Response response;
     bool hasDebugLog;
+    ThreadPool* threadPool;
 };
 
 #endif // REQUESTDISPATCHERTHREAD_H

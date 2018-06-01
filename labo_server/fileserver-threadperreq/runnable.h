@@ -4,15 +4,23 @@
 #include "request.h"
 #include "response.h"
 #include "abstractbuffer.h"
+#include "QObject"
 
-class Runnable
+class Runnable : public QObject
 {
+    Q_OBJECT
+private:
+    Request request;
+    AbstractBuffer<Response>* responsesBuffer;
+    int myId;
+    bool hasDebugLog;
 public:
-    virtual ~Runnable(){
+    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, int myId, bool hasDebugLog);
+    ~Runnable(){
 
     }
-    virtual void run() = 0;
-    virtual QString id() = 0;
+    void run();
+    QString id();
 };
 
 #endif // RUNNABLE_H

@@ -6,6 +6,7 @@
 #include <QString>
 #include <QThread>
 #include "abstractbuffer.h"
+#include <QObject>
 
 class RunnableTask : public Runnable
 {
