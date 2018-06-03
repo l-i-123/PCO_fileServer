@@ -22,11 +22,15 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 }
 
 void RequestDispatcherThread::run(){
+    mutex.lock();
+    unsigned int tempID = id;
+    ++id;
+    mutex.unlock();
 
     while(true){
 
         request = requestsBuffer->get();
-        Runnable *task = new Runnable(request, responsesBuffer, 1, hasDebugLog);
+        Runnable *task = new Runnable(request, responsesBuffer, tempID, hasDebugLog);
         threadPool->start(task);
 
     }

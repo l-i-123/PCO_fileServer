@@ -9,7 +9,7 @@ ThreadPool::ThreadPool(int maxThreadCount):maxThreadCount(maxThreadCount)
 
 
 void ThreadPool::start(Runnable* runnable){
-
+    monitorIn();
 
     //Cas ou tous les thread ne son pas encore créé
     if(threadBusyCount == threadCreateCount && threadsVector.size() < maxThreadCount){
@@ -38,6 +38,8 @@ void ThreadPool::start(Runnable* runnable){
 
         signal(emptyRunnableVector);
     }
+
+    monitorOut();
 
 }
 

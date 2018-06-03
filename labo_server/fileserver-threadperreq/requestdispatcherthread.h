@@ -35,6 +35,8 @@ private:
     Response response;
     bool hasDebugLog;
     ThreadPool* threadPool;
+    unsigned int id;
+    QMutex mutex;
 };
 
 #endif // REQUESTDISPATCHERTHREAD_H
