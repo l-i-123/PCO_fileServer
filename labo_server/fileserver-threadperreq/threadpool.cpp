@@ -11,14 +11,11 @@ ThreadPool::ThreadPool(int maxThreadCount):maxThreadCount(maxThreadCount)
 void ThreadPool::start(Runnable* runnable){
 
 
-    runnableVector.push_front(runnable);
-
-    signal(emptyRunnableVector);
-
-
     //Cas ou tous les thread ne son pas encore créé
     if(threadBusyCount == threadCreateCount && threadsVector.size() < maxThreadCount){
         Worker* worker = new Worker(runnable, threadCreateCount++);
+
+        printf("NEW THREAD!!!\n");
 
         //Peux-être pas nécessaire
         threadsVector.push_back(worker);
@@ -31,8 +28,15 @@ void ThreadPool::start(Runnable* runnable){
         connect(this, SIGNAL(newRunnable(Runnable*)), worker, SLOT(newRunnable(Runnable*)));
         //La méthode new runnable du threadPool devra géré la concurrence entre les Runnable disponible et les thread en demande
 
+        worker->start();
+
         threadBusyCount++;
         threadCreateCount++;
+    }
+    else{
+        runnableVector.push_front(runnable);
+
+        signal(emptyRunnableVector);
     }
 
 }
@@ -43,6 +47,8 @@ void ThreadPool::start(Runnable* runnable){
 //Cette fonction est appelé à la fin d'un thread et lui renvoie un nouveau runnable à traiter
 void ThreadPool::handleThreadEnd(int number){
     monitorIn();
+
+    printf("HANDLE_THREAD_END RECU!!!\n");
 
     //Attente si tous les thread son occupé
     if(runnableVector.size() == 0){

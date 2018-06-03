@@ -2,13 +2,14 @@
 
 Worker::Worker(Runnable* runnable, int threadId):runnable(runnable), threadId(threadId)
 {
-
+    waitRunnable = false;
 }
 
 void Worker::run(){
 
     while(true){
         if(waitRunnable == false){
+            printf("NEW WORKER RUN\n");
             runnable->run();
             runnableEnd(threadId); // send signal
             waitRunnable = true;

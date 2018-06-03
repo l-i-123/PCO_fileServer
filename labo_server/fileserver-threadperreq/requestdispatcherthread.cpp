@@ -24,20 +24,11 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 void RequestDispatcherThread::run(){
 
     while(true){
-        //SendRequestThread* newThread;
 
-        /* Waiting on value in the request buffer */
         request = requestsBuffer->get();
-
         Runnable *task = new Runnable(request, responsesBuffer, 1, hasDebugLog);
-
         threadPool->start(task);
 
-        /* Send a signal when the thread is finished. It means that it can be deleted
-           This part between the signal and the slot is a little bit more complex
-           Check the link: http://doc.qt.io/archives/qt-4.8/signalsandslots.html */
-        //connect(newThread, &SendRequestThread::finished, newThread, &QObject::deleteLater);
-        //newThread->start();
     }
 
 }
