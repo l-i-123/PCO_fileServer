@@ -2,7 +2,8 @@
 
 ThreadPool::ThreadPool(int maxThreadCount):maxThreadCount(maxThreadCount)
 {
-    currentThreadCount = 0;
+    threadBusyCount = 0;
+    threadCreateCount = 0;
     freeThread.fill(true, maxThreadCount);
 }
 
@@ -11,45 +12,53 @@ void ThreadPool::start(Runnable* runnable){
 
     monitorIn();
 
-
     threadsVector.push_front(new QThread());
     runnableVector.push_front(runnable);
 
-    if(currentThreadCount >= maxThreadCount){
+    //Attente si tous les thread son accupé
+    if(threadBusyCount >= maxThreadCount){
         wait(allThreadBusy);
     }
 
-    if(currentThreadCount == threadsVector.size() && threadsVector.size() < maxThreadCount){
-        Worker* worker = new Worker(runnable);
+
+    //Cas ou tous les thread ne son pas encore créé
+    if(threadBusyCount == threadCreateCount && threadsVector.size() < maxThreadCount){
+        Worker* worker = new Worker(runnable, threadCreateCount++);
 
         //Peux-être pas nécessaire
-        threadsVector.push_back(new Worker(runnable));
+        threadsVector.push_back(worker);
 
         //Communication entre le worker et le threadpool
         connect(worker, SIGNAL(runnableEnd(int)), this, SLOT(handleThreadEnd(int)));
 
         //Géré de nouvelle connection afin d'attribuer de nouveaux runnable aux worker libre
         //Ce sera probablement quelque chose du style
-        //connect(this, SIGNAL(newRunnable(Runnable)), threadsVector.at(i), SLOT(newRunnable(Runnable)));
+        connect(this, SIGNAL(newRunnable(Runnable*)), worker, SLOT(newRunnable(Runnable*)));
         //La méthode new runnable du threadPool devra géré la concurrence entre les Runnable disponible et les thread en demande
 
-
-        currentThreadCount++;
-        freeThread.at(currentThreadCount - 1) = false;
+        threadBusyCount++;
+        threadCreateCount++;
     }
-
-
 
     monitorOut();
 }
 
 //Signal reçu lorsque l'execution d'un runnable est terminé
 //number retourne le numéro du thread concerné
+
+//Cette fonction est appelé à la fin d'un thread et lui renvoie un nouveau runnable à traiter
 void ThreadPool::handleThreadEnd(int number){
     monitorIn();
 
-    freeThread.at(number - 1) = true;
-    currentThreadCount--;
+
+    Runnable* run = runnableVector.back();
+    runnableVector.pop_back();
+
+    run->id() = number;
+    newRunnable(run);
+    runnableVector.pop_back();
+    //Il faut encore gérer le signal allThreadBusy
+
 
     monitorOut();
 }

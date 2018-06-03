@@ -1,6 +1,6 @@
 #include "worker.h"
 
-Worker::Worker(Runnable* runnable):runnable(runnable)
+Worker::Worker(Runnable* runnable, int threadId):runnable(runnable), threadId(threadId)
 {
 
 }
@@ -8,7 +8,17 @@ Worker::Worker(Runnable* runnable):runnable(runnable)
 void Worker::run(){
 
     while(true){
-        runnable->run();
-        runnableEnd((int)1); // send signal
+        if(waitRunnable == false){
+            runnable->run();
+            runnableEnd(threadId); // send signal
+            waitRunnable = true;
+        }
+    }
+}
+
+void Worker::newRunnable(Runnable* runnable){
+    if(runnable->id() == threadId){
+        this->runnable = runnable;
+        waitRunnable = false;
     }
 }

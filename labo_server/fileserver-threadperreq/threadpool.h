@@ -16,8 +16,10 @@ private:
     QVector<QThread*> threadsVector;
     QVector<Runnable*> runnableVector;
 
-    int currentThreadCount;
+    int threadCreateCount;
+    int threadBusyCount;
     Condition allThreadBusy;
+    QVector<bool> freeThread;
 
 public:
     ThreadPool(int maxThreadCount);
@@ -26,6 +28,9 @@ public:
 
 public slots:
     void handleThreadEnd(int number);
+
+signals:
+    void newRunnable(Runnable* runnable);
 };
 
 #endif // THREADPOOL_H
