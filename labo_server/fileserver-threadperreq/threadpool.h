@@ -18,7 +18,7 @@ private:
 
     int threadCreateCount;
     int threadBusyCount;
-    Condition allThreadBusy;
+    Condition emptyRunnableVector;
     QVector<bool> freeThread;
 
 public:
