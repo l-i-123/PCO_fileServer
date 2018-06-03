@@ -12,6 +12,13 @@ class ThreadPool : public HoareMonitor
 {
     Q_OBJECT
 private:
+
+    QVector<Runnable*>* poolThreadTab;
+    QVector<Runnable>* threadWaiting;
+    unsigned int poolThreadCapacity;
+    unsigned int poolThreadUsed;
+
+    /*
     int maxThreadCount;
     QVector<QThread*> threadsVector;
     QVector<Runnable*> runnableVector;
@@ -20,6 +27,7 @@ private:
     int threadBusyCount;
     Condition emptyRunnableVector;
     QVector<bool> freeThread;
+    */
 
 public:
     ThreadPool(int maxThreadCount);

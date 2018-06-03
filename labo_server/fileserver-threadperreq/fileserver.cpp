@@ -109,7 +109,14 @@ void FileServer::processTextMessage(QString message)
         qDebug() << "Message received:" << message;
     if (pClient) {
         Request req(message, pClient->origin());
-        requests->put(req);
+
+        /* On essaie d'ajouter une nouvelle requête dans le tampon des requêtes.
+           S'il est plein, un message d'erreur est affiché à l'utilisateur. */
+        if(!(requests->tryPut(req))){
+            pClient->sendTextMessage(Response(req, "server overloaded, try later").toJson());
+        }else{
+            qDebug() << "Request added successfully";
+        }
     }
 }
 

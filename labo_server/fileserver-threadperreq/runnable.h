@@ -12,15 +12,18 @@ class Runnable : public QObject
 private:
     Request request;
     AbstractBuffer<Response>* responsesBuffer;
-    int myId;
     bool hasDebugLog;
 public:
+    Runnable();
     Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, int myId, bool hasDebugLog);
+    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog);
     ~Runnable(){
 
     }
     void run();
+
     QString id();
+    int myId;
 };
 
 #endif // RUNNABLE_H

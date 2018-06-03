@@ -1,16 +1,20 @@
 #include "threadpool.h"
 
-ThreadPool::ThreadPool(int maxThreadCount):maxThreadCount(maxThreadCount)
+ThreadPool::ThreadPool(int maxThreadCount):poolThreadCapacity(maxThreadCount),poolThreadUsed(0)
 {
-    threadBusyCount = 0;
-    threadCreateCount = 0;
-    freeThread.fill(true, maxThreadCount);
+    poolThreadTab = new QVector<Runnable*>;
+    for(int i = 0; i < poolThreadCapacity; ++i){
+        poolThreadTab->append(new Runnable());
+        poolThreadTab->at(i)->myId = i;
+    }
 }
 
 
 void ThreadPool::start(Runnable* runnable){
     monitorIn();
 
+   // if()
+/*
     //Cas ou tous les thread ne son pas encore créé
     if(threadBusyCount == threadCreateCount && threadsVector.size() < maxThreadCount){
         Worker* worker = new Worker(runnable, threadCreateCount++);
@@ -38,7 +42,7 @@ void ThreadPool::start(Runnable* runnable){
 
         signal(emptyRunnableVector);
     }
-
+*/
     monitorOut();
 
 }
@@ -50,6 +54,7 @@ void ThreadPool::start(Runnable* runnable){
 void ThreadPool::handleThreadEnd(int number){
     monitorIn();
 
+    /*
     printf("HANDLE_THREAD_END RECU!!!\n");
 
     //Attente si tous les thread son occupé
@@ -65,6 +70,7 @@ void ThreadPool::handleThreadEnd(int number){
     runnableVector.pop_back();
     //Il faut encore gérer le signal allThreadBusy
 
+*/
 
     monitorOut();
 }

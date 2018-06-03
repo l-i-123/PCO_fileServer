@@ -11,6 +11,9 @@
 
 template<typename T>
 class AbstractBuffer {
+protected:
+    const static unsigned int MAX_SIZE;
+
 public:
 
     /**
