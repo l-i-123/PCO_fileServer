@@ -15,7 +15,7 @@
 #include <QVector>
 #include <QWaitCondition>
 
-const unsigned int MAX_SIZE = 100;
+const int MAX_SIZE = 100;
 
 template<typename T>
 class MesaBuffer : public AbstractBuffer<T>
@@ -57,6 +57,8 @@ public:
     }
 
     bool tryPut(T item){
+
+        /*
         mutex->lock();
 
         if(buffer.size() == MAX_SIZE){
@@ -68,10 +70,11 @@ public:
         mutex->unlock();
 
         return true;
+        */
 
-        /*
+
         mutex->lock();
-        if(buffer.size() > 20){
+        if(buffer.size() < MAX_SIZE){
             buffer.push_front(item);
             isFull.wakeOne();
         }
@@ -82,7 +85,7 @@ public:
 
         mutex->unlock();
         return true;
-        */
+
     }
 
 private:

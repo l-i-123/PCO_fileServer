@@ -61,9 +61,7 @@ FileServer::FileServer(quint16 port, bool debug, QObject *parent) :
                                             QWebSocketServer::NonSecureMode, this)),
     hasDebugLog(debug)
 {
-    // requests = new... TODO
-    // responses = new... TODO
-    // reqDispatcher = new... TODO
+
     requests = new MesaBuffer<Request>();
     responses = new MesaBuffer<Response>();
 

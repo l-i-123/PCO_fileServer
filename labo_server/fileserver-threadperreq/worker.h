@@ -9,21 +9,18 @@ class Worker: public QThread
 {
     Q_OBJECT
 public:
-    Worker(Runnable* runnable, int id);
+    Worker(Runnable* runnable);
+    void setNewRunnable(Runnable* newRunnable);
+    Runnable* runnable;
 
 protected:
     void run() Q_DECL_OVERRIDE;
 
-private:
-    Runnable* runnable;
-    bool waitRunnable;
-    int threadId;
-
 signals:
-    void runnableEnd(int threadNumber);
+    void runnableEnd(QString id);
 
-public slots:
-    void newRunnable(Runnable* runnable);
+private:
+
 };
 
 #endif // WORKER_H

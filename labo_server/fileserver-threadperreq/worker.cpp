@@ -1,25 +1,17 @@
 #include "worker.h"
 
-Worker::Worker(Runnable* runnable, int threadId):runnable(runnable), threadId(threadId)
+Worker::Worker(Runnable* runnable):runnable(runnable)
 {
-    waitRunnable = false;
+
 }
 
 void Worker::run(){
-
-    while(true){
-        if(waitRunnable == false){
-            printf("NEW WORKER RUN\n");
-            runnable->run();
-            runnableEnd(threadId); // send signal
-            waitRunnable = true;
-        }
-    }
+    printf("worker start\n");
+    runnable->run();
+    emit runnableEnd(runnable->id());
 }
 
-void Worker::newRunnable(Runnable* runnable){
-    if(runnable->id() == threadId){
-        this->runnable = runnable;
-        waitRunnable = false;
-    }
+
+void Worker::setNewRunnable(Runnable* newRunnable){
+    runnable = newRunnable;
 }
