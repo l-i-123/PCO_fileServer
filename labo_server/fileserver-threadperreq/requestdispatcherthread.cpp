@@ -10,9 +10,9 @@
 #include "requestdispatcherthread.h"
 #include "sendrequestthread.h"
 #include "runnable.h"
-#include "runnabletask.h"
 #include <QVector>
 #include <QThread>
+#include <QString>
 
 RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog){
     this->requestsBuffer = requestsBuffer;
@@ -22,11 +22,11 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 }
 
 void RequestDispatcherThread::run(){
-
+    int runnableId = 0;
     while(true){
 
         request = requestsBuffer->get();
-        Runnable *task = new Runnable(request, responsesBuffer, hasDebugLog);
+        Runnable *task = new Runnable(request, responsesBuffer, QString::number(runnableId++), hasDebugLog);
         threadPool->start(task);
 
     }

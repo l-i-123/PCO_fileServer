@@ -17,7 +17,7 @@ protected:
     void run() Q_DECL_OVERRIDE;
 
 signals:
-    void runnableEnd(QString id);
+    void runnableEnd();
 
 private:
 

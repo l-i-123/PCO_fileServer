@@ -4,7 +4,8 @@
 #include "request.h"
 #include "response.h"
 #include "abstractbuffer.h"
-#include "QObject"
+#include <QObject>
+#include "requesthandler.h"
 
 class Runnable : public QObject
 {
@@ -13,17 +14,16 @@ private:
     Request request;
     AbstractBuffer<Response>* responsesBuffer;
     bool hasDebugLog;
+    RequestHandler* reqHandler;
+    QString myId;
 public:
     Runnable();
-    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, int myId, bool hasDebugLog);
-    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog);
-    ~Runnable(){
+    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, bool hasDebugLog);
+    ~Runnable();
 
-    }
     void run();
 
     QString id();
-    int myId;
 };
 
 #endif // RUNNABLE_H

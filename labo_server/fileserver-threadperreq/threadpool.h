@@ -26,9 +26,11 @@ private:
 
 public:
     ThreadPool(int poolThreadCapacity, bool hasDebugLog);
+    ThreadPool(int poolThreadCapacity);
+    ~ThreadPool();
     void start(Runnable* runnable);
 public slots:
-    void runnableFinished(QString id);
+    void runnableFinished();
 
 };
 
