@@ -15,8 +15,10 @@ private:
 
     QVector<Runnable*>* poolThreadTab;
     QVector<Runnable>* threadWaiting;
+    QVector<bool> threadAvailable;
     unsigned int poolThreadCapacity;
     unsigned int poolThreadUsed;
+    Condition waitCond;
 
     /*
     int maxThreadCount;
