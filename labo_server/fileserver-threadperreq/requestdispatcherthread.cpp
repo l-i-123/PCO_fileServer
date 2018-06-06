@@ -10,6 +10,7 @@
 #include "requestdispatcherthread.h"
 #include "sendrequestthread.h"
 #include "runnable.h"
+#include "runnabletask.h"
 #include <QVector>
 #include <QThread>
 #include <QString>

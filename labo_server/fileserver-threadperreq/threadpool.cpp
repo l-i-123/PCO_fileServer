@@ -21,14 +21,14 @@ ThreadPool::~ThreadPool(){
 
 }
 
-void ThreadPool::start(RunnableTask* runnable){
+void ThreadPool::start(Runnable* runnable){
     monitorIn();
 
     //cet affichage permet de voir le vecteur de thread grandir en fonction du nombre de
     //requête lancé en paralelle
-    if (hasDebugLog) {
-         qDebug() << "Nombre de thread dans le threadsVector: " << threadsVector.size();
-     }
+    //if (hasDebugLog) {
+      //   qDebug() << "Nombre de thread dans le threadsVector: " << threadsVector.size();
+     //}
 
     runnableVector.push_front(runnable);
 

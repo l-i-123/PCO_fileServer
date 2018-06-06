@@ -4,7 +4,6 @@
 #include <QString>
 #include <QtTest>
 #include <QTime>
-#include "runnable.h"
 
 #include "threadpool.h"
 

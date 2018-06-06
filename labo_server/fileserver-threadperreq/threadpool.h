@@ -1,4 +1,4 @@
-#include "runnabletask.h"
+#include "runnable.h"
 #include <QThread>
 #include <QVector>
 #include "request.h"
@@ -19,7 +19,7 @@ private:
     Condition waitCond;
 
     QVector<Worker*> threadsVector;
-    QVector<RunnableTask*> runnableVector;
+    QVector<Runnable*> runnableVector;
     bool hasDebugLog;
 
     int threadAvailible();
@@ -28,7 +28,7 @@ public:
     ThreadPool(int poolThreadCapacity, bool hasDebugLog);
     ThreadPool(int poolThreadCapacity);
     ~ThreadPool();
-    void start(RunnableTask* runnable);
+    void start(Runnable* runnable);
 public slots:
     void runnableFinished();
 

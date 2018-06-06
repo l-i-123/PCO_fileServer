@@ -1,6 +1,6 @@
 #include "worker.h"
 
-Worker::Worker(RunnableTask* runnable):runnable(runnable)
+Worker::Worker(Runnable* runnable):runnable(runnable)
 {
 
 }
@@ -14,6 +14,6 @@ void Worker::run(){
 }
 
 //La méthode setNewRunnble permet au worker de recevoir de nouveau runnable
-void Worker::setNewRunnable(RunnableTask* newRunnable){
+void Worker::setNewRunnable(Runnable* newRunnable){
     runnable = newRunnable;
 }

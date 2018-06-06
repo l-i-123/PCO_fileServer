@@ -1,4 +1,5 @@
 QT       += core websockets
+QT       += testlib
 QT       -= gui
 
 TARGET = fileserver
@@ -18,7 +19,8 @@ SOURCES += \
     threadpool.cpp \
     hoaremonitor.cpp \
     worker.cpp \
-    runnabletask.cpp
+    runnabletask.cpp \
+    tst_threadpool.cpp
 
 HEADERS += \
     fileserver.h \
@@ -35,7 +37,8 @@ HEADERS += \
     threadpool.h \
     hoaremonitor.h \
     worker.h \
-    runnabletask.h
+    runnabletask.h \
+    tst_threadpool.h
 
 EXAMPLE_FILES += fileclient.html
 
