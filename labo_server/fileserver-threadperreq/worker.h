@@ -1,5 +1,5 @@
 #include <QThread>
-#include "runnable.h"
+#include "runnabletask.h"
 
 #ifndef WORKER_H
 #define WORKER_H
@@ -9,9 +9,9 @@ class Worker: public QThread
 {
     Q_OBJECT
 public:
-    Worker(Runnable* runnable);
-    void setNewRunnable(Runnable* newRunnable);
-    Runnable* runnable;
+    Worker(RunnableTask* runnable);
+    void setNewRunnable(RunnableTask* newRunnable);
+    RunnableTask* runnable;
 
 protected:
     void run() Q_DECL_OVERRIDE;

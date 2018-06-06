@@ -28,7 +28,7 @@ void RequestDispatcherThread::run(){
         request = requestsBuffer->get();
 
         //Création d'une tâche
-        Runnable *task = new Runnable(request, responsesBuffer, QString::number(runnableId++), hasDebugLog);
+        RunnableTask *task = new RunnableTask(request, responsesBuffer, QString::number(runnableId++), hasDebugLog);
 
         //Lancemen de la tâche dans le thread pool
         threadPool->start(task);

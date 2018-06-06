@@ -12,19 +12,16 @@ ThreadPool::ThreadPool(int poolThreadCapacity):poolThreadCapacity(poolThreadCapa
 
 ThreadPool::~ThreadPool(){
 
+    //Déstruction de tous les threads
     for(int i = 0; i < threadsVector.size(); i++){
         threadsVector.at(i)->terminate();
         threadsVector.at(i)->wait();
         threadsVector.at(i)->deleteLater();
     }
 
-    for(int i = 0; i < runnableVector.size(); i++){
-        runnableVector.at(i)->deleteLater();
-    }
-
 }
 
-void ThreadPool::start(Runnable* runnable){
+void ThreadPool::start(RunnableTask* runnable){
     monitorIn();
 
     //cet affichage permet de voir le vecteur de thread grandir en fonction du nombre de
@@ -43,10 +40,12 @@ void ThreadPool::start(Runnable* runnable){
     //si le nombre de thread utilisé est égal au nombre de
     // thread créé cela signifie qu'il faut en créer de nouveau
     else if(poolThreadUsed == threadsVector.size()){
+        //Création d'un nouveau Worker
         Worker* newWorker = new Worker(runnableVector.back());
         runnableVector.pop_back();
 
         threadsVector.push_front(newWorker);
+        //Connection entre le worker et le threadpool via les méthode runnableEnd and runnableFinished
         connect(newWorker, &Worker::runnableEnd, this, &ThreadPool::runnableFinished);
 
         threadsVector.front()->start();
@@ -58,9 +57,11 @@ void ThreadPool::start(Runnable* runnable){
         //Recherche du premier thread libre
         while(freeWorkerFind == false && count < threadsVector.size()){
             if(threadsVector.at(count)->isFinished()){
+                //Attribution d'un nouveau runnable au thread
                 threadsVector.at(count)->setNewRunnable(runnableVector.back());
                 runnableVector.pop_back();
 
+                //Start du thread auquel le nouveau runnable à été attribué
                 threadsVector.at(count)->start();
 
                 poolThreadUsed++;

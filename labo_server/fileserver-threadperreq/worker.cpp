@@ -1,16 +1,19 @@
 #include "worker.h"
 
-Worker::Worker(Runnable* runnable):runnable(runnable)
+Worker::Worker(RunnableTask* runnable):runnable(runnable)
 {
 
 }
 
 void Worker::run(){
-    printf("worker start\n");
+    //Lancement du runnable
     runnable->run();
+
+    //Lorsque le runnable est fini un message est envoyé à la classe ThreadPool
     emit runnableEnd();
 }
 
-void Worker::setNewRunnable(Runnable* newRunnable){
+//La méthode setNewRunnble permet au worker de recevoir de nouveau runnable
+void Worker::setNewRunnable(RunnableTask* newRunnable){
     runnable = newRunnable;
 }

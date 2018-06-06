@@ -1,28 +1,16 @@
 #ifndef RUNNABLE_H
 #define RUNNABLE_H
+
 #include <QString>
-#include "request.h"
-#include "response.h"
-#include "abstractbuffer.h"
-#include <QObject>
-#include "requesthandler.h"
 
-class Runnable : public QObject
+class Runnable
 {
-    Q_OBJECT
-private:
-    Request request;
-    AbstractBuffer<Response>* responsesBuffer;
-    bool hasDebugLog;
-    RequestHandler* reqHandler;
-    QString myId;
 public:
-    Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, bool hasDebugLog);
-    ~Runnable();
+    //virtual ~Runnable() = 0;
 
-    void run();
+    virtual QString id() = 0;
 
-    QString id();
+    virtual void run() = 0;
 };
 
 #endif // RUNNABLE_H
