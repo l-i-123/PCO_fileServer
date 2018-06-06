@@ -58,21 +58,6 @@ public:
 
     bool tryPut(T item){
 
-        /*
-        mutex->lock();
-
-        if(buffer.size() == MAX_SIZE){
-            return false;
-        }
-
-        buffer.push_front(item);
-
-        mutex->unlock();
-
-        return true;
-        */
-
-
         mutex->lock();
         if(buffer.size() < MAX_SIZE){
             buffer.push_front(item);

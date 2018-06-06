@@ -24,11 +24,13 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
 void RequestDispatcherThread::run(){
     int runnableId = 0;
     while(true){
-
+        //Récupération de la requête dans le buffer de buffer
         request = requestsBuffer->get();
+
+        //Création d'une tâche
         Runnable *task = new Runnable(request, responsesBuffer, QString::number(runnableId++), hasDebugLog);
+
+        //Lancemen de la tâche dans le thread pool
         threadPool->start(task);
-
     }
-
 }

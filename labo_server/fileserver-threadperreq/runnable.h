@@ -17,7 +17,6 @@ private:
     RequestHandler* reqHandler;
     QString myId;
 public:
-    Runnable();
     Runnable(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, bool hasDebugLog);
     ~Runnable();
 
