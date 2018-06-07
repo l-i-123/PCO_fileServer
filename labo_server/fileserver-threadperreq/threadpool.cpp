@@ -77,7 +77,7 @@ void ThreadPool::start(Runnable* runnable){
     put(runnable);
     //si le nombre de thread utilisé est égal au nombre de
     // thread créé cela signifie qu'il faut en créer de nouveau
-    if(poolThreadUsed < poolThreadCapacity){
+    if(threadsVector.size() < poolThreadCapacity){
         //Création d'un nouveau Worker
         WorkerThread* newWorker = new WorkerThread(this);
 
