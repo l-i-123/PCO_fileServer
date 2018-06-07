@@ -51,10 +51,11 @@
 #include <QtCore/QCommandLineParser>
 #include <QtCore/QCommandLineOption>
 #include "fileserver.h"
-/*
 
+/*
 int main(int argc, char *argv[])
 {
+
     qSetMessagePattern("Thread #%{threadid}: %{message}");
     QCoreApplication a(argc, argv);
 
@@ -77,6 +78,7 @@ int main(int argc, char *argv[])
     QObject::connect(server, &FileServer::closed, &a, &QCoreApplication::quit);
 
     return a.exec();
+
 }
 
 */

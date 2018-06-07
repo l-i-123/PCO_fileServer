@@ -20,6 +20,8 @@ public:
 
     void run();
 
+    //virtual ~RunnableTask() {}
+
     QString id();
 };
 

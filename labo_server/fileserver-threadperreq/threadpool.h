@@ -11,6 +11,32 @@
 class ThreadPool : public HoareMonitor
 {
     Q_OBJECT
+
+public:
+    ThreadPool(int poolThreadCapacity, bool hasDebugLog);
+    ThreadPool(int poolThreadCapacity);
+    ~ThreadPool();
+    void start(Runnable* runnable);
+    void put(Runnable* item);
+    Runnable* get(void);
+    int nbWaitingConso;
+    int nbWaitingProd;
+
+    class WorkerThread: public QThread
+    {
+        friend ThreadPool;
+
+    public:
+        WorkerThread(ThreadPool* poolPointer);
+        void setNewRunnable(Runnable* newRunnable);
+        Runnable* runnable;
+    private:
+        ThreadPool* poolPointer;
+
+    protected:
+        void run() Q_DECL_OVERRIDE;
+    };
+
 private:
 
     QVector<bool> threadAvailable;
@@ -18,20 +44,13 @@ private:
     int poolThreadUsed;
     Condition waitCond;
 
-    QVector<Worker*> threadsVector;
+    QVector<WorkerThread*> threadsVector;
     QVector<Runnable*> runnableVector;
     bool hasDebugLog;
 
     int threadAvailible();
-
-public:
-    ThreadPool(int poolThreadCapacity, bool hasDebugLog);
-    ThreadPool(int poolThreadCapacity);
-    ~ThreadPool();
-    void start(Runnable* runnable);
-public slots:
-    void runnableFinished();
-
+    Condition waitConso;
+    Condition waitProd;
 };
 
 #endif // THREADPOOL_H

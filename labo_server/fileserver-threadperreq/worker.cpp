@@ -8,7 +8,7 @@ Worker::Worker(Runnable* runnable):runnable(runnable)
 void Worker::run(){
     //Lancement du runnable
     runnable->run();
-
+    
     //Lorsque le runnable est fini un message est envoyé à la classe ThreadPool
     emit runnableEnd();
 }
