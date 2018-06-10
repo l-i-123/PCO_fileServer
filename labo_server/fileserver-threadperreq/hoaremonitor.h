@@ -1,3 +1,13 @@
+/**
+ * Description:     Prototype of a Hoare Monitor with an internal class.
+ *                  The internal is the class Condition which is the parameter
+ *                  used in the method wait and signal
+ * Name of file:    hoaremonitor.h
+ * Authors:         NDjoli Elie
+ *                  Silva Miguel
+ * Date:            30.05.2018
+ */
+
 #ifndef HOAREMONITOR_H
 #define HOAREMONITOR_H
 
@@ -17,6 +27,7 @@ class HoareMonitor: public QObject
 public:
     HoareMonitor();
 
+    /* Internal class used as parameter of the methods wait and signal */
     class Condition
     {
         friend HoareMonitor;
