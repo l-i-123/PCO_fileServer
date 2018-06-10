@@ -38,13 +38,15 @@ void ThreadPool::WorkerThread::run(){
 
     //Lancement du runnable
     while(true){
+
         runnable = poolPointer->get();
 
         poolPointer->mutex->acquire();
         (*poolThreadUsed)++;
-        poolPointer->mutex->release();
+        poolPointer->mutex->release();      
 
         runnable->run();
+
 
         poolPointer->mutex->acquire();
         (*poolThreadUsed)--;
@@ -71,10 +73,13 @@ void ThreadPool::put(Runnable* item) {
     runnableVector.push_front(item);
 
     /* Vérifie si un consommateur est disponible ou non */
+    /*
     if (nbWaitingConso > 0) {
         nbWaitingConso -= 1;
         signal(waitConso);
     }
+    */
+    signal(waitConso);
 
     monitorOut();
 }
@@ -90,7 +95,7 @@ Runnable* ThreadPool::get(void) {
     /* Vérifie s'il y a un objet Runnable en attente dans le QVector.
        Se met en attente s'il y en a pas. */
     if (runnableVector.empty()) {
-        nbWaitingConso += 1;
+        //nbWaitingConso += 1;
         wait(waitConso);
     }
 
@@ -117,9 +122,12 @@ void ThreadPool::start(Runnable* runnable){
 
     // Vérifie si le nombre the thread est au maximum et si le nombre de thread
     // créé et le même que le nombre de thread utilisé en ce moment
+    mutex->acquire();
+    qDebug() << "Nombre de thread dans le threadsVector: " << threadsVector.size();
+    qDebug() << "CreatedThread : " << createdThread;
+    qDebug() << "poolThreadUsed: " << poolThreadUsed;
     if((threadsVector.size() < poolThreadCapacity) && (createdThread == poolThreadUsed)){
     //if(threadsVector.size() < poolThreadCapacity){
-
         //Création d'un nouveau Worker
         WorkerThread* newWorker = new WorkerThread(this);
 
@@ -127,6 +135,7 @@ void ThreadPool::start(Runnable* runnable){
         threadsVector.front()->start();
         createdThread++;
     }
+    mutex->release();
 
 }
 
