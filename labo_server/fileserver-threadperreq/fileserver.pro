@@ -18,7 +18,6 @@ SOURCES += \
     sendrequestthread.cpp \
     threadpool.cpp \
     hoaremonitor.cpp \
-    worker.cpp \
     runnabletask.cpp \
     tst_threadpool.cpp
 
@@ -36,7 +35,6 @@ HEADERS += \
     runnable.h \
     threadpool.h \
     hoaremonitor.h \
-    worker.h \
     runnabletask.h \
     tst_threadpool.h
 
