@@ -79,11 +79,7 @@ public:
     Runnable* get(void);
     int nbWaitingConso = 0;
     int nbWaitingProd = 0;
-    QMutex mutex;
-
-    void ThreadPool::lockMutex(void);
-
-    void ThreadPool::unlockMutex(void);
+    QSemaphore* mutex;
 
 
     /**
@@ -103,17 +99,13 @@ public:
          */
         WorkerThread(ThreadPool* poolPointer);
 
-        /**
-         * Set a pointer to another runnable to the variable runnable.
-         * @brief setNewRunnable
-         * @param newRunnable
-         */
-        void setNewRunnable(Runnable* newRunnable);
         Runnable* runnable;
 
     private:
 
         ThreadPool* poolPointer;
+        unsigned int* poolThreadUsed;
+
 
     protected:
 
@@ -132,18 +124,26 @@ public:
 
 private:
 
+
     /* Maximum number of threads in the pool */
     int poolThreadCapacity;
+
     /* Number of threads created */
     unsigned int createdThread;
+
+    /* Active or not the debug */
+    bool hasDebugLog;
+
     /* Number of threads in used */
     unsigned int poolThreadUsed;
+
     /* QVector with all threads of the pool */
     QVector<WorkerThread*> threadsVector;
+
     /* QVector with the Runnable objects waiting
        the availability of a thread */
     QVector<Runnable*> runnableVector;
-    bool hasDebugLog;
+
     /* Consumer condition variable */
     Condition waitConso;
     /* Producer condition variable */

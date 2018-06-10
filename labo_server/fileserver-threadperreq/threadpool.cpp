@@ -21,15 +21,18 @@
 #include "threadpool.h"
 #include <QDebug>
 
-ThreadPool::ThreadPool(int poolThreadCapacity, bool hasDebugLog):poolThreadCapacity(poolThreadCapacity),createdThread(0), poolThreadUsed(0), hasDebugLog(hasDebugLog){
+ThreadPool::ThreadPool(int poolThreadCapacity, bool hasDebugLog):poolThreadCapacity(poolThreadCapacity),createdThread(0), hasDebugLog(hasDebugLog), poolThreadUsed(0){
     mutex = new QSemaphore(1);
 }
 
-ThreadPool::ThreadPool(int poolThreadCapacity):poolThreadCapacity(poolThreadCapacity),createdThread(0), poolThreadUsed(0){
+ThreadPool::ThreadPool(int poolThreadCapacity):poolThreadCapacity(poolThreadCapacity),createdThread(0), poolThreadUsed(0) {
     mutex = new QSemaphore(1);
 }
 
-ThreadPool::WorkerThread::WorkerThread(ThreadPool* poolPointer):poolPointer(poolPointer){}
+ThreadPool::WorkerThread::WorkerThread(ThreadPool* poolPointer):poolPointer(poolPointer){
+
+    poolThreadUsed = &poolPointer->poolThreadUsed;
+}
 
 void ThreadPool::WorkerThread::run(){
 
@@ -37,24 +40,16 @@ void ThreadPool::WorkerThread::run(){
     while(true){
         runnable = poolPointer->get();
 
-        //mutex->acquire();
-        lockMutex();
-        poolThreadUsed++;
-        //mutex->release();
-        unlockMutex();
+        poolPointer->mutex->acquire();
+        (*poolThreadUsed)++;
+        poolPointer->mutex->release();
 
         runnable->run();
 
-        //mutex->acquire();
-        lockMutex();
-        poolThreadUsed--;
-        //mutex->release();
-        unlockMutex();
+        poolPointer->mutex->acquire();
+        (*poolThreadUsed)--;
+        poolPointer->mutex->release();
     }
-}
-
-void ThreadPool::WorkerThread::setNewRunnable(Runnable* newRunnable){
-    runnable = newRunnable;
 }
 
 ThreadPool::~ThreadPool(){
@@ -122,7 +117,8 @@ void ThreadPool::start(Runnable* runnable){
 
     // Vérifie si le nombre the thread est au maximum et si le nombre de thread
     // créé et le même que le nombre de thread utilisé en ce moment
-    if(threadsVector.size() < poolThreadCapacity && createdThread == poolThreadUsed){
+    if((threadsVector.size() < poolThreadCapacity) && (createdThread == poolThreadUsed)){
+    //if(threadsVector.size() < poolThreadCapacity){
 
         //Création d'un nouveau Worker
         WorkerThread* newWorker = new WorkerThread(this);
@@ -133,15 +129,6 @@ void ThreadPool::start(Runnable* runnable){
     }
 
 }
-
-void ThreadPool::lockMutex(void){
-    mutex.lock();
-}
-
-void ThreadPool::unlockMutex(void){
-    mutex.unlock();
-}
-
 
 
 
