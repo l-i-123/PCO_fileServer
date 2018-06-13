@@ -88,4 +88,4 @@ void ThreadpoolTest::testCase2()
     QVERIFY2(startingTime.msecsTo(endingTime) > (10 * RUNTIMEINMS - 30), "Too short execution time");
 }
 
-QTEST_APPLESS_MAIN(ThreadpoolTest)
+//QTEST_APPLESS_MAIN(ThreadpoolTest)

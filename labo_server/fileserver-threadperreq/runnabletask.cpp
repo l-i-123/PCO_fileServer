@@ -11,19 +11,29 @@
 #include "runnabletask.h"
 #include "response.h"
 #include "request.h"
+#include "option.h"
 
-RunnableTask::RunnableTask(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, bool hasDebugLog):request(request), responsesBuffer(responsesBuffer), hasDebugLog(hasDebugLog), myId(myId){}
+RunnableTask::RunnableTask(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, ReaderWriterCache* cache, bool hasDebugLog):request(request), responsesBuffer(responsesBuffer), hasDebugLog(hasDebugLog), myId(myId), cache(cache){}
 
 
 void RunnableTask::run(){
-    //création d'un nouveau request handler
-    reqHandler = new RequestHandler(request, hasDebugLog);
 
-    //Réception de la réponse
-    Response response = reqHandler->handle();
+    Response response ;
+    Option<Response> cachedResponse = cache->tryGetCachedResponse(request);
 
+    if(cachedResponse.hasValue()){
+        response = cachedResponse.value();
+    }
+    else{
+        //création d'un nouveau request handler
+        reqHandler = new RequestHandler(request, hasDebugLog);
+
+        //Réception de la réponse
+        response = reqHandler->handle();
+    }
     //Envoie de la réponse de la requête dans le response buffer
     responsesBuffer->put(response);
+
 }
 
 QString RunnableTask::id(){

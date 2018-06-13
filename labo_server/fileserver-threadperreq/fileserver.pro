@@ -19,7 +19,9 @@ SOURCES += \
     threadpool.cpp \
     hoaremonitor.cpp \
     runnabletask.cpp \
-    tst_threadpool.cpp
+    tst_threadpool.cpp \
+    readerwritercache.cpp \
+    readerwriterlock.cpp
 
 HEADERS += \
     fileserver.h \
@@ -36,7 +38,10 @@ HEADERS += \
     threadpool.h \
     hoaremonitor.h \
     runnabletask.h \
-    tst_threadpool.h
+    tst_threadpool.h \
+    option.h \
+    readerwritercache.h \
+    readerwriterlock.h
 
 EXAMPLE_FILES += fileclient.html
 

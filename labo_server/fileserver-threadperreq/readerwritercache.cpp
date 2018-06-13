@@ -10,9 +10,10 @@ ReaderWriterCache::ReaderWriterCache(int invalidationDelaySec, int staleDelaySec
 }
 
 ReaderWriterCache::~ReaderWriterCache()
-{
+{}
 
 void ReaderWriterCache::putResponse(Response &response) {
+
 }
 
 Option<Response> ReaderWriterCache::tryGetCachedResponse(Request &request) {

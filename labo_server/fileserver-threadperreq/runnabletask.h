@@ -16,6 +16,7 @@
 #include "abstractbuffer.h"
 #include "requesthandler.h"
 #include "runnable.h"
+#include "readerwritercache.h"
 
 class RunnableTask: public Runnable
 {
@@ -26,6 +27,7 @@ private:
     bool hasDebugLog;
     RequestHandler* reqHandler;
     QString myId;
+    ReaderWriterCache* cache;
 public:
 
     /**
@@ -36,7 +38,7 @@ public:
      * @param myId
      * @param hasDebugLog
      */
-    RunnableTask(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, bool hasDebugLog);
+    RunnableTask(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, ReaderWriterCache* cache, bool hasDebugLog);
 
     /**
      * Method doing the request to the server. Then put the response

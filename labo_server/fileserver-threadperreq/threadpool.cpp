@@ -39,18 +39,18 @@ void ThreadPool::WorkerThread::run(){
     //Lancement du runnable
     while(true){
 
-        runnable = poolPointer->get();
+            runnable = poolPointer->get();
 
-        poolPointer->mutex->acquire();
-        (*poolThreadUsed)++;
-        poolPointer->mutex->release();      
+            poolPointer->mutex->acquire();
+            (*poolThreadUsed)++;
+            poolPointer->mutex->release();
 
-        runnable->run();
+            runnable->run();
 
 
-        poolPointer->mutex->acquire();
-        (*poolThreadUsed)--;
-        poolPointer->mutex->release();
+            poolPointer->mutex->acquire();
+            (*poolThreadUsed)--;
+            poolPointer->mutex->release();
     }
 }
 

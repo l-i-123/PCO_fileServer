@@ -17,6 +17,7 @@
 #include "sendrequestthread.h"
 #include "response.h"
 #include "threadpool.h"
+#include "readerwritercache.h"
 
 class RequestDispatcherThread : public QThread
 {
@@ -35,6 +36,7 @@ private:
     Response response;
     bool hasDebugLog;
     ThreadPool* threadPool;
+    ReaderWriterCache* cache;
 };
 
 #endif // REQUESTDISPATCHERTHREAD_H
