@@ -27,7 +27,18 @@ private:
 
 	protected:
 		void run() {
-           // while(cache->map)
+            QHash::iterator it;
+            long timeStamp;
+
+            while(true){
+                for(it = map->begin(); it != map->end(); it++){
+                    timeStamp = QDateTime::currentDateTime().toString().toLong();
+                    if(it.value() < timeStamp + 2000){
+                        it = map->erase(it);
+                    }
+                }
+                QThread.sleep(12000);
+            }
 		}
 	};
 

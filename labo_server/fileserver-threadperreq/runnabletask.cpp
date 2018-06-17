@@ -30,6 +30,7 @@ void RunnableTask::run(){
 
         //Réception de la réponse
         response = reqHandler->handle();
+        cache->putResponse(response);
     }
     //Envoie de la réponse de la requête dans le response buffer
     responsesBuffer->put(response);
