@@ -62,6 +62,7 @@ FileServer::FileServer(quint16 port, bool debug, QObject *parent) :
     hasDebugLog(debug)
 {
 
+    //qDebug() << "Max long: " << std::numeric_limits<long>::max();
     requests = new MesaBuffer<Request>();
     responses = new MesaBuffer<Response>();
 

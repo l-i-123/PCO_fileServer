@@ -27,11 +27,11 @@ private:
 
 	protected:
 		void run() {
-			// TODO
+           // while(cache->map)
 		}
 	};
 
-	QHash<QString, TimestampedResponse> map;
+    QHash<QString, TimestampedResponse>* map;
 	int invalidationDelaySec;
 	int staleDelaySec;
 	InvalidationTimer* timer;

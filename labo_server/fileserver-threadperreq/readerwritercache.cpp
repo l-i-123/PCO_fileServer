@@ -7,6 +7,8 @@
 ReaderWriterCache::ReaderWriterCache(int invalidationDelaySec, int staleDelaySec):
     invalidationDelaySec(invalidationDelaySec), staleDelaySec(staleDelaySec)
 {
+    timer = new InvalidationTimer(this);
+    map = new QHash<QString, TimestampedResponse>();
 }
 
 ReaderWriterCache::~ReaderWriterCache()
