@@ -12,6 +12,8 @@
 #include "response.h"
 #include "request.h"
 #include "option.h"
+#include "readerwritercache.h"
+#include "readerwriterlock.h"
 
 RunnableTask::RunnableTask(Request request, AbstractBuffer<Response>* responsesBuffer, QString myId, ReaderWriterCache* cache, bool hasDebugLog):request(request), responsesBuffer(responsesBuffer), hasDebugLog(hasDebugLog), myId(myId), cache(cache){}
 
@@ -19,6 +21,7 @@ RunnableTask::RunnableTask(Request request, AbstractBuffer<Response>* responsesB
 void RunnableTask::run(){
 
     Response response ;
+
     Option<Response> cachedResponse = cache->tryGetCachedResponse(request);
 
     if(cachedResponse.hasValue()){
@@ -30,6 +33,7 @@ void RunnableTask::run(){
 
         //Réception de la réponse
         response = reqHandler->handle();
+
         cache->putResponse(response);
     }
     //Envoie de la réponse de la requête dans le response buffer

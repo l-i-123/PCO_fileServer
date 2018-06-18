@@ -1,3 +1,12 @@
+/**
+ * Description:     La class ReaderWriterLock implémente un algorithme de lecteur/redacteur
+ * Name of file:    readerwriterlock.h
+ * Authors:         NDjoli Elie
+ *                  Silva Miguel
+ * Date:            18.06.2018
+ */
+
+
 #ifndef READERWRITERLOCK_H
 #define READERWRITERLOCK_H
 

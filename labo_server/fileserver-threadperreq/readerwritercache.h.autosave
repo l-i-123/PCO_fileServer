@@ -1,5 +1,15 @@
+/**
+ * Description:     La class ReaderWriterCache contient implémente le cache des requêtes ainsi que
+ *                  la classe interne de contrôle de la validité des donnée
+ * Name of file:    readerwritercache.h
+ * Authors:         NDjoli Elie
+ *                  Silva Miguel
+ * Date:            18.06.2018
+ */
+
 #ifndef READERWRITERCACHE_H
 #define READERWRITERCACHE_H
+
 #include <QHash>
 #include <QThread>
 #include <QDateTime>

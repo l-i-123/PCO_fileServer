@@ -20,6 +20,12 @@ RequestDispatcherThread::RequestDispatcherThread(AbstractBuffer<Request>* reques
     this->responsesBuffer = responsesBuffer;
     this->hasDebugLog = hasDebugLog;
     this->threadPool = new ThreadPool(QThread::idealThreadCount(), hasDebugLog);
+    this->cache = new ReaderWriterCache(1, 120);
+}
+
+RequestDispatcherThread::~RequestDispatcherThread(){
+    delete threadPool;
+    delete cache;
 }
 
 void RequestDispatcherThread::run(){

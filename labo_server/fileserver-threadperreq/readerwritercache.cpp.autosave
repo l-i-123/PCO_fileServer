@@ -14,6 +14,11 @@ ReaderWriterCache::ReaderWriterCache(int invalidationDelaySec, int staleDelaySec
 ReaderWriterCache::~ReaderWriterCache()
 {}
 
+/**
+ * Description: La méthode putResponse permet d'ajouter une réponse dans le cache
+ * @brief ReaderWriterCache::putResponse
+ * @param response
+ */
 void ReaderWriterCache::putResponse(Response &response) {
     lock.lockWriting();
     TimestampedResponse timerResponse;
@@ -23,6 +28,13 @@ void ReaderWriterCache::putResponse(Response &response) {
     lock.unlockWriting();
 }
 
+/**
+ * Description: La méthode tryGetCachedResponse permet de récupérer une réponse dans le
+ * cache si elle est disponible
+ * @brief ReaderWriterCache::tryGetCachedResponse
+ * @param request
+ * @return res
+ */
 Option<Response> ReaderWriterCache::tryGetCachedResponse(Request &request) {
     InvalidationTimer timer(this);
     timer.run();

@@ -24,6 +24,8 @@ class RequestDispatcherThread : public QThread
 public:
     RequestDispatcherThread(AbstractBuffer<Request>* requestsBuffer, AbstractBuffer<Response>* responsesBuffer, bool hasDebugLog);
 
+    ~RequestDispatcherThread();
+
 protected:
     void run();
 
